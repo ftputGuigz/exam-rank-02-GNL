@@ -4,7 +4,9 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
 
-int get_next_line(char **line);
+int get_next_line(int fd, char **line);
 
 #endif

@@ -1,4 +1,6 @@
 #include "get_next_line.h"
+#include <stdio.h>
+
 
 int	ft_strlen(char *str)
 {
@@ -17,11 +19,14 @@ char *ft_strdup(char *str)
 
 	i = 0;
 	new = NULL;
-	new = malloc(sizeof(char) * (ft_strlen(str[i]) + 1));
+	new = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!new)
 		return (NULL);
 	while (str[i])
-		new[i] = str[i++];
+	{
+		new[i] = str[i];
+		i++;
+	}
 	new[i] = '\0';
 	return (new);
 }
@@ -41,43 +46,44 @@ char *strjoin(char *str, char *str2)
 		return (NULL);
 	i = 0;
 	while (str[i])
-		new[i] == str[i++];
+	{
+		new[i] = str[i];
+		i++;
+	}
 	j = 0;
 	while (str2[j])
-		new[i++] == str2[j++];
-	new(a + b) == '\0';
+		new[i++] = str2[j++];
+	new[a + b] = '\0';
 	return (new);
 }
 
-int	get_next_line(char **line)
+int	get_next_line(int fd, char **line)
 {
 	int by;
 	char buf[2];
 	char *tmp;
 
 	buf[1] = '\0';
-	if (line)
-		free(line);
-	line = ft_strdup("");
-	if (!line)
+	*line = ft_strdup("");
+	if (!(*line))
 		return (-1);
-	by = read(0, buf, 1);
-	while (by >= 0 && buf[0] != '\0' && buf[0] != '\n')
+	by = read(fd, buf, 1);
+	while (by > 0 && buf[0] != '\0' && buf[0] != '\n')
 	{
-		tmp = line;
-		line = strjoin(tmp, buf);
+		tmp = *line;
+		*line = strjoin(tmp, buf);
 		free(tmp);
-		by = read(0, buf, 1)
+		by = read(fd, buf, 1);
 	}
 	if (by > 0 && buf[0] == '\n')
-		return (1)
+		return (1);
 	else if (by > 0 && buf[0] == '\0')
-
+		return (0);
 	else if (by == 0)
 	{
-		line = ft_strdup("");
+		*line = ft_strdup("");
 		return (0);
 	}
-	else if (by == -1)
+	else
 		return (-1);
 }
