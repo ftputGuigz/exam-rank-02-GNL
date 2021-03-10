@@ -57,7 +57,7 @@ char *strjoin(char *str, char *str2)
 	return (new);
 }
 
-int	get_next_line(int fd, char **line)
+int	get_next_line(char **line)
 {
 	int by;
 	char buf[2];
@@ -67,13 +67,13 @@ int	get_next_line(int fd, char **line)
 	*line = ft_strdup("");
 	if (!(*line))
 		return (-1);
-	by = read(fd, buf, 1);
+	by = read(0, buf, 1);
 	while (by > 0 && buf[0] != '\0' && buf[0] != '\n')
 	{
 		tmp = *line;
 		*line = strjoin(tmp, buf);
 		free(tmp);
-		by = read(fd, buf, 1);
+		by = read(0, buf, 1);
 	}
 	if (by > 0 && buf[0] == '\n')
 		return (1);
@@ -87,3 +87,6 @@ int	get_next_line(int fd, char **line)
 	else
 		return (-1);
 }
+
+//HELLO WORLD
+
