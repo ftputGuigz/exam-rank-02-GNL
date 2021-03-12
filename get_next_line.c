@@ -1,6 +1,4 @@
 #include "get_next_line.h"
-#include <stdio.h>
-
 
 int	ft_strlen(char *str)
 {
@@ -32,27 +30,23 @@ char *ft_strdup(char *str)
 
 char *strjoin(char *str, char *str2)
 {
-	int a;
-	int b;
+	int size;
 	char *new;
-	int i;
-	int j;
+	int i = 0;
+	int j = 0;
 
-	a = ft_strlen(str);
-	b = ft_strlen(str2);
-	new = malloc(sizeof(char) * (a + b + 1));
+	size = ft_strlen(str) + ft_strlen(str2);
+	new = malloc(sizeof(char) * (size + 1));
 	if (!new)
 		return (NULL);
-	i = 0;
 	while (str[i])
 	{
 		new[i] = str[i];
 		i++;
 	}
-	j = 0;
 	while (str2[j])
 		new[i++] = str2[j++];
-	new[a + b] = '\0';
+	new[size] = '\0';
 	return (new);
 }
 
@@ -65,7 +59,10 @@ int	get_next_line(char **line)
 	buf[1] = '\0';
 	*line = ft_strdup("");
 	if (!(*line))
+	{
+		*line = NULL;
 		return (-1);
+	}
 	by = read(0, buf, 1);
 	while (by > 0 && buf[0] != '\0' && buf[0] != '\n')
 	{
@@ -79,13 +76,7 @@ int	get_next_line(char **line)
 	else if (by > 0 && buf[0] == '\0')
 		return (0);
 	else if (by == 0)
-	{
-		*line = ft_strdup("");
 		return (0);
-	}
 	else
 		return (-1);
 }
-
-//HELLO WORLD
-
